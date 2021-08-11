@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado Productos</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- generar responsibidad del sitio -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/funciones.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+</head>
+<script>
+    $(document).ready(function() {
+    $('#example').DataTable({
+      "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No exiten registros - para la busqueda",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No exiten registros disponibles",
+            "infoFiltered": "(filtered from _MAX_ total registros)",
+            "search": "Buscar",
+            "Previous": "Anterior",
+            "Next": "Siguiente"
+
+        }
+    });
+} );
+</script>
+<body>
+<div class="container p-3 my-3 bg-primary text-white">
+<h1>Listado de Productos</h1>
+<a class="btn btn-success" href="{% url 'crear_producto' %}">
+        <i class="bi bi-person-plus"></i>
+</a>
+<br>
+<table class="table table-striped table-bordered" id="example">
+     <thead class="thead-dark">
+      <tr>
+        <th>Codigo</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+         <th>Modificar</th>
+          <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+            {% for arti in articulos %}
+             <tr class="table-warning">
+              <td>{{ arti.codigo_producto }}</td>
+              <td>{{ arti.nombre_producto }}</td>
+              <td>{{ arti.precio }}</td>
+              <td><a class="btn btn-success" href="{% url 'editar_producto' arti.id %}"><i class="bi bi-pencil-square"></i></a> </td>
+              <td><a class="btn btn-danger" href="{% url 'eliminar_producto' arti.id %}"><i class="bi bi-trash"></i></a> </td>
+             </tr>
+            {% endfor %}
+   </tbody>
+</table>
+</div>
+</body>
+</html>

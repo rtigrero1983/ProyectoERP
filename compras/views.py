@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from compras.models import Cliente, Producto
+from compras.models import Cliente, Producto, Factura
 from django.http import HttpResponse
-from compras.forms import ClienteForm, ProductoForm
+from compras.forms import ClienteForm, ProductoForm, FacturaForm
 # Create your views here.
 
 
@@ -116,5 +116,36 @@ def buscar_usuario(request):
     else:
       data= Cliente.objects.filter(nombres=usuario, apellido=clave)
       return render(request, "Dashboard.html", {"datos": data, "usuario": usuario})
+
+
+def cargar_listado_factura(request):
+    factura1 = Factura.objects.all()
+    return render(request, "listado_factura.html", {'facturas': factura1})
+
+
+def crear_factura(request):
+    if request.method == 'GET':
+        formulario = FacturaForm()
+        contexto = {
+            'formulario': formulario
+        }
+        return render(request, "crear_factura.html", contexto)
+    else:
+        formulario = FacturaForm(request.POST)
+        contexto = {
+            'form': formulario
+        }
+        # print(formulario)
+        if formulario.is_valid():
+            formulario.save()
+        return redirect('consulta_factura')
+
+
+def editar_factura(reques):
+    return "Hello Word"
+
+
+def eliminar_factura(reques):
+    return "Hello Word"
 
 
